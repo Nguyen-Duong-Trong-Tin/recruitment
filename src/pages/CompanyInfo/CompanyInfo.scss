@@ -1,0 +1,18 @@
+.companyInfo {
+  padding: 80px 30px;
+
+  &__title {
+    font-size: 36px;
+  }
+
+  &__inner-button {
+    text-align: right;
+    margin-bottom: 30px;
+  }
+
+  @media (max-width: 575.98px) {
+    &__title {
+      font-size: 28px;
+    }
+  }
+}

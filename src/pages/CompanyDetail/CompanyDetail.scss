@@ -1,0 +1,33 @@
+.company {
+  padding: 80px 0;
+
+  &__title {
+    font-size: 36px;
+    color: #CD201F;
+  }
+
+  &__desc {
+    text-align: justify;
+  }
+
+  @media (max-width: 575.98px) {
+    &__title {
+      font-size: 28px;
+    }
+  }
+}
+
+.job-list {
+  padding: 80px 0;
+
+  &__title {
+    text-align: center;
+    font-size: 36px;
+  }
+
+  @media (max-width: 575.98px) {
+    &__title {
+      font-size: 28px;
+    }
+  }
+}

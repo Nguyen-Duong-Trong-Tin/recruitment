@@ -1,0 +1,13 @@
+.dashboard {
+  padding: 80px 30px;
+
+  &__title {
+    font-size: 36px;
+  }
+
+  @media (max-width: 575.98px) {
+    &__title {
+      font-size: 28px;
+    }
+  }
+}
