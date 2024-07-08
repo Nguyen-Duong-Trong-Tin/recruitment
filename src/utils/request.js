@@ -1,4 +1,5 @@
-const DOMAIN = "http://localhost:3002/";
+// const DOMAIN = "http://localhost:3002/";
+const DOMAIN = "https://recruitment-db.onrender.com/";
 
 export const get = async (PATH) => {
   const response = await fetch(`${DOMAIN}${PATH}`);
