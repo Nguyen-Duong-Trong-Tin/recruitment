@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Col, Form, Input, notification, Row } from 'antd';
-import { getCompany } from '../../services/companiesServices';
+import { login } from '../../services/companiesServices';
 import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../../helpers/cookies';
 import { useDispatch } from 'react-redux';
@@ -15,14 +15,12 @@ function Login() {
       description: description,
     });
   };
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onFinish = async (values) => {
     const { email, password } = values;
-
-    const result = await getCompany(email, password);
+    const result = await login(email, password);
 
     if (result.length <= 0) {
       openNotificationWithIcon("error", "Error", "Wrong the email or the password");
@@ -34,11 +32,10 @@ function Login() {
     setCookie("companyName", result[0].companyName, 1);
     setCookie("email", result[0].email, 1);
     setCookie("token", result[0].token, 1);
-
     dispatch(checkLogin(true));
-
     navigate("/");
   };
+  
   const onFinishFailed = (errorInfo) => {
     openNotificationWithIcon("error", "Error", "Something is happening! Try later...");
   };

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import GoBack from "../../components/GoBack";
-import { editCV, getCVs } from "../../services/CVsServices";
-import { getJobs } from "../../services/jobsServices";
+import { editCV, getCVByID } from "../../services/CVsServices";
+import { getJobByID } from "../../services/jobsServices";
 
 function CVDetail() {
   const params = useParams();
@@ -10,8 +10,8 @@ function CVDetail() {
 
   useEffect(() => {
     const fetchApi = async () => {
-      const resultCV = await getCVs(params.id);
-      const resultJob = await getJobs(resultCV.idJob);
+      const resultCV = await getCVByID(params.id);
+      const resultJob = await getJobByID(resultCV.idJob);
       setData(
         {
           ...resultCV,
@@ -19,7 +19,7 @@ function CVDetail() {
         }
       );
 
-      const resultEditCV = await editCV(params.id, {
+      await editCV(params.id, {
         statusRead: true
       });
     }

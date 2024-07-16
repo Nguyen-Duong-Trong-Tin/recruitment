@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Col, Form, Input, notification, Row } from 'antd';
 import "./Register.scss";
 import { generateToken } from '../../helpers/generateToken';
-import { createCompany, getCompany } from '../../services/companiesServices';
+import { checkExistEmail, register } from '../../services/companiesServices';
 import { isEmptyObject } from '../../helpers/isEmptyObject';
 
 function Register() {
@@ -15,11 +15,10 @@ function Register() {
   };
 
   const onFinish = async (values) => {
-    const resultGetCompany = await getCompany(values.email);
+    const resultGetCompany = await checkExistEmail(values.email);
 
     if (resultGetCompany.length > 0) {
       openNotificationWithIcon("error", "Error", "The email is exist");
-
       return;
     }
 
@@ -28,7 +27,7 @@ function Register() {
       token: generateToken(20)
     }
 
-    const resultCreateCompany = await createCompany(options);
+    const resultCreateCompany = await register(options);
 
     if (isEmptyObject(resultCreateCompany)) {
       openNotificationWithIcon("error", "Error", "Something is happening! Try later...");
@@ -37,6 +36,7 @@ function Register() {
       openNotificationWithIcon("success", "Success", "Created your account");
     }
   };
+  
   const onFinishFailed = () => {
     openNotificationWithIcon("error", "Error", "Something is happening! Try later...");
   };

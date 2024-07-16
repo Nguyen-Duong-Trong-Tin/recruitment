@@ -5,8 +5,10 @@ import { getCities } from '../../services/citiesServices';
 import { createCV } from '../../services/CVsServices';
 import { isEmptyObject } from '../../helpers/isEmptyObject';
 import { useParams } from 'react-router-dom';
-import { getJobs } from '../../services/jobsServices';
-import { getTimeNow } from '../../helpers/handleTime';
+import { getJobByID } from '../../services/jobsServices';
+import { getMonthNow, getTimeNow, getYearNow } from '../../helpers/handleTime';
+import { createChart, editChart, getChartByIDCompany } from '../../services/chartsServices';
+import { updateChart } from '../../helpers/handleChart';
 
 function ApplyForm() {
   const [api, contextHolder] = notification.useNotification();
@@ -16,7 +18,6 @@ function ApplyForm() {
       description: description,
     });
   };
-
   const [data, setData] = useState();
   const [form] = Form.useForm();
   const idJob = useParams().id;
@@ -24,7 +25,7 @@ function ApplyForm() {
   useEffect(() => {
     const fetchApi = async () => {
       const resultCities = await getCities();
-      const resultJob = await getJobs(`${idJob}`);
+      const resultJob = await getJobByID(idJob);
       setData(
         {
           cities: resultCities,
@@ -50,20 +51,42 @@ function ApplyForm() {
   }
 
   const onFinish = async (values) => {
+    const idCompany = data && data.job.idCompany;
     const options = {
       ...values,
       idJob: data && data.job.id,
-      idCompany: data && data.job.idCompany,
+      idCompany: idCompany,
       sent: getTimeNow(),
       statusRead: false
     };
 
-    const result = await createCV(options);
+    const resultCreateCV = await createCV(options);
 
-    if (isEmptyObject(result)) {
-      openNotificationWithIcon("error", "Error", "Something is happening! Try later...");
+    // UpdateChart
+    const resultGetChartByIDCompany = await getChartByIDCompany(idCompany);
+
+    if (resultGetChartByIDCompany.length > 0) {
+      const idChart = resultGetChartByIDCompany[0].id;
+      updateChart(resultGetChartByIDCompany[0].dataChart);
+      await editChart(idChart, {
+        dataChart: resultGetChartByIDCompany[0].dataChart
+      });
+    } else {
+      await createChart({
+        dataChart: [
+          {
+            date: `${getMonthNow()}-${getYearNow()}`,
+            quantity: 1
+          }
+        ],
+        idCompany: idCompany
+      });
     }
-    else {
+    // End UpdateChart
+
+    if (isEmptyObject(resultCreateCV)) {
+      openNotificationWithIcon("error", "Error", "Something is happening! Try later...");
+    } else {
       openNotificationWithIcon("success", "Success", "We sent your information to employer");
       onReset();
     }

@@ -11,6 +11,10 @@ import { useState } from "react";
 
 const siderStyle = {
   backgroundColor: '#ffffff',
+  height: '100vh',
+  position: 'sticky',
+  left: 0,
+  top: 0,
 };
 
 function LayoutAdmin() {
@@ -21,7 +25,7 @@ function LayoutAdmin() {
       <section className="layout-admin">
         <header className="header">
           <div className="header__logo">
-            <Link to="/">IT Admin</Link>
+            <Link to="#">IT Admin</Link>
           </div>
           <ul className="header__right">
             <li className="header__admin">

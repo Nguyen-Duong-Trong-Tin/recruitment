@@ -1,7 +1,12 @@
 import { del, get, patch, post } from "../utils/request"
 
-export const getCVs = async (params="") => {
-  const result = await get(`cvs/${params}`);
+export const getCVByID = async (id) => {
+  const result = await get(`cvs/${id}`);
+  return result;
+}
+
+export const getCVsByIDCompany = async (idCompany) => {
+  const result = await get(`cvs?idCompany=${idCompany}`);
   return result;
 }
 

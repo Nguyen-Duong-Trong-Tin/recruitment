@@ -12,7 +12,6 @@ function SearchForm() {
       description: description,
     });
   };
-
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
@@ -45,6 +44,7 @@ function SearchForm() {
 
     navigate(`/resultSearch?${paramCities}&${paramKeyword}`);
   };
+
   const onFinishFailed = () => {
     openNotificationWithIcon("error", "Error", "Something is happening! Try later...");
   };
@@ -63,7 +63,6 @@ function SearchForm() {
         value: "All"
       }
     );
-
     return result;
   }
 

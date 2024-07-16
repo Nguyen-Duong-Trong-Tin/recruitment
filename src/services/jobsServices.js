@@ -1,7 +1,22 @@
 import { del, get, patch, post } from "../utils/request"
 
-export const getJobs = async (params="") => {
+export const getJobs = async () => {
+  const result = await get("jobs");
+  return result;
+}
+
+export const getJobsByParams = async (params) => {
   const result = await get(`jobs/${params}`);
+  return result;
+}
+
+export const getJobByID = async (id) => {
+  const result = await get(`jobs/${id}`);
+  return result;
+}
+
+export const getJobsByIDCompany = async (idCompany) => {
+  const result = await get(`jobs?idCompany=${idCompany}`);
   return result;
 }
 

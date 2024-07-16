@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { getJobs } from "../../services/jobsServices";
+import { getJobsByParams } from "../../services/jobsServices";
 import { extractSearchCitiesParams, extractSearchTagsParams } from "../../helpers/handleParams";
 import { Button, Card, Col, Row, Tag } from "antd";
 import { getCompanies } from "../../services/companiesServices";
@@ -8,16 +8,14 @@ import { getCompanies } from "../../services/companiesServices";
 function JobsList() {
   const [data, setData] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-
   const citiesParam = searchParams.get("cities_like") ? `cities_like=${searchParams.get("cities_like")}` : "";
   const tagsParam = searchParams.get("tags_like") ? `tags_like=${searchParams.get("tags_like")}` : "";
-
   const citiesArray = extractSearchCitiesParams(citiesParam);
   const tag = extractSearchTagsParams(tagsParam);
 
   useEffect(() => {
     const fetchApi = async () => {
-      const resultJobs = await getJobs(`?${citiesParam}&${tagsParam}&status=true`);
+      const resultJobs = await getJobsByParams(`?${citiesParam}&${tagsParam}&status=true`);
       const resultCompanies = await getCompanies();
       setData(resultJobs.map(item => {
         const resultSearch = resultCompanies.find(itemCompany => itemCompany.id === item.idCompany);

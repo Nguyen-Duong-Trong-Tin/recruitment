@@ -1,20 +1,26 @@
 import { get, patch, post } from "../utils/request"
 
-export const getCompanies = async (idCompany="") => {
-  const result = await get(`companies/${idCompany}`);
+export const getCompanies = async () => {
+  const result = await get("companies");
   return result;
 }
 
-export const getCompany = async (email, password) => {
-  const result = await get(
-    "companies?"
-    + (email ? `email=${email}` : "")
-    + (password ? `&password=${password}` : "")
-  );
+export const getCompanyByID = async (id) => {
+  const result = await get (`companies/${id}`);
   return result;
 }
 
-export const createCompany = async (options) => {
+export const login = async (email, password) => {
+  const result = await get(`companies?email=${email}&password=${password}`);
+  return result;
+}
+
+export const checkExistEmail = async (email) => {
+  const result = await get(`companies?email=${email}`);
+  return result;
+}
+
+export const register = async (options) => {
   const result = await post("companies", options);
   return result; 
 }

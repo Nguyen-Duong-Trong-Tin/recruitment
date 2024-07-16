@@ -8,9 +8,7 @@ function CompanyDetail() {
   return (
     <>
       <GoBack />
-
       <CompanyInfo />
-
       <JobsList />
     </>
   )

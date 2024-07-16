@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getCompanies } from "../../services/companiesServices";
+import { getCompanyByID } from "../../services/companiesServices";
 
 function CompanyInfo() {
   const params = useParams();
@@ -8,7 +8,7 @@ function CompanyInfo() {
 
   useEffect(() => {
     const fetchApi = async () => {
-      const result = await getCompanies(params.id);
+      const result = await getCompanyByID(params.id);
       setData(result);
     }
     fetchApi();

@@ -3,14 +3,12 @@ import { Button, Col, Form, Input, notification, Row, Select, Switch } from 'ant
 import { getTags } from '../../services/tagsServices';
 import { getCities } from '../../services/citiesServices';
 import TextArea from 'antd/es/input/TextArea';
-import { getCookie } from '../../helpers/cookies';
 import { getTimeNow } from '../../helpers/handleTime';
-import { createJob, editJob } from '../../services/jobsServices';
+import { editJob } from '../../services/jobsServices';
 import { isEmptyObject } from '../../helpers/isEmptyObject';
 
 function EditJob(props) {
   const { dataModal, setConfirmLoading, setOpen, handleReload } = props;
-
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type, message, description) => {
     api[type]({
@@ -18,7 +16,6 @@ function EditJob(props) {
       description: description,
     });
   };
-
   const [data, setData] = useState();
   const [form] = Form.useForm();
   const onReset = () => {
@@ -72,6 +69,7 @@ function EditJob(props) {
       handleReload();
     }
   };
+  
   const onFinishFailed = () => {
     openNotificationWithIcon("error", "Error", "Something is happening! Try later...");
   };

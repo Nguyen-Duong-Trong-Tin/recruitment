@@ -33,6 +33,10 @@ export const routes = [
         element: <Login />
       },
       {
+        path: "logout",
+        element: <Logout />
+      },
+      {
         path: "register",
         element: <Register />
       },
@@ -55,20 +59,12 @@ export const routes = [
         element: <CompanyDetail />
       },
       {
-        element: <PrivateRoutes />,
-        children: [
-          {
-            path: "logout",
-            element: <Logout />
-          }
-        ]
-      },
-      {
         path: "*",
         element: <Error404 />
       }
     ]
   },
+  //Private
   {
     element: <PrivateRoutes />,
     children: [

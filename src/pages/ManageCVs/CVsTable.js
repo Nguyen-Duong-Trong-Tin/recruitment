@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { deleteCV, getCVs } from "../../services/CVsServices";
+import { deleteCV, getCVsByIDCompany } from "../../services/CVsServices";
 import { getCookie } from "../../helpers/cookies";
 import { Button, message, Popconfirm, Space, Table, Tag } from "antd";
 import { getJobs } from "../../services/jobsServices";
@@ -10,15 +10,15 @@ import { MdDeleteOutline } from "react-icons/md";
 function CVsTable() {
   const [data, setData] = useState([]);
   const idCompany = getCookie("id");
-
   const [reload, setReload] = useState(false);
+
   const handleReload = () => {
     setReload(!reload);
   }
 
   useEffect(() => {
     const fetchApi = async () => {
-      const resultCVs = await getCVs(`?idCompany=${idCompany}`);
+      const resultCVs = await getCVsByIDCompany(idCompany);
       const resultJobs = await getJobs();
 
       setData(resultCVs.map(item => {
@@ -43,6 +43,7 @@ function CVsTable() {
       handleReload();
     }
   };
+
   const cancel = () => {
     message.error('Click on No');
   };
@@ -115,7 +116,7 @@ function CVsTable() {
         </>
       )
     }
-  ]
+  ];
 
   return (
     <>

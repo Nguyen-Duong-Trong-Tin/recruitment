@@ -15,9 +15,7 @@ function JobDetail() {
   return (
     <>
       <GoBack />
-
       <JobInfo onApplyClick={handleApplyClick} />
-
       <div ref={applyFormRef}>
         <ApplyForm />
       </div>

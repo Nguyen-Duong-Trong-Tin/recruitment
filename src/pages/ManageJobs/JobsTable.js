@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getCookie } from "../../helpers/cookies";
-import { deleteJob, getJobs } from "../../services/jobsServices";
+import { deleteJob, getJobsByIDCompany } from "../../services/jobsServices";
 import { Button, message, Modal, Popconfirm, Space, Table, Tag } from "antd";
 import { FaEye } from "react-icons/fa";
 import { FaPen } from "react-icons/fa6";
@@ -11,7 +11,6 @@ import EditJob from "./EditJob";
 function JobsTable() {
   const [data, setData] = useState([]);
   const idCompany = getCookie("id");
-
   const [reload, setReload] = useState(false);
   const handleReload = () => {
     setReload(!reload);
@@ -19,7 +18,7 @@ function JobsTable() {
 
   useEffect(() => {
     const fetchApi = async () => {
-      const result = await getJobs(`?idCompany=${idCompany}`);
+      const result = await getJobsByIDCompany(idCompany);
       setData(result);
     }
     fetchApi();
@@ -45,6 +44,7 @@ function JobsTable() {
       handleReload();
     }
   };
+  
   const cancel = () => {
     message.error('Click on No');
   };

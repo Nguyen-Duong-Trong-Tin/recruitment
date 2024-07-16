@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getJobs } from "../../services/jobsServices";
+import { getJobsByIDCompany } from "../../services/jobsServices";
 import { Button, Card, Col, Row, Tag } from "antd";
-import { getCompanies } from "../../services/companiesServices";
+import { getCompanyByID } from "../../services/companiesServices";
 
 function JobsList() {
   const params = useParams();
@@ -10,8 +10,8 @@ function JobsList() {
 
   useEffect(() => {
     const fetchApi = async () => {
-      const resultJobs = await getJobs(`?idCompany=${params.id}`);
-      const resultCompany = await getCompanies(params.id);
+      const resultJobs = await getJobsByIDCompany(params.id);
+      const resultCompany = await getCompanyByID(params.id);
       setData(resultJobs.map(item => (
         {
           ...item,

@@ -17,7 +17,6 @@ function CreateJob() {
       description: description,
     });
   };
-
   const [data, setData] = useState();
   const idCompany = getCookie("id");
   const [form] = Form.useForm();
@@ -49,6 +48,7 @@ function CreateJob() {
   const onReset = () => {
     form.resetFields();
   };
+
   const onFinish = async (values) => {
     const options = {
       ...values,
@@ -66,6 +66,7 @@ function CreateJob() {
       onReset();
     }
   };
+  
   const onFinishFailed = () => {
     openNotificationWithIcon("error", "Error", "Something is happening! Try later...");
   };

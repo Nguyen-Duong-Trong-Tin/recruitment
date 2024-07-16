@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Form, Input, notification, Row } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import { editCompany, getCompanies } from '../../services/companiesServices';
+import { editCompany, getCompanyByID } from '../../services/companiesServices';
 import { getCookie } from '../../helpers/cookies';
 import { isEmptyObject } from '../../helpers/isEmptyObject';
 import "./CompanyInfo.scss";
@@ -14,7 +14,6 @@ function CompanyInfo() {
       description: description,
     });
   };
-
   const [form] = Form.useForm();
   const [componentDisabled, setComponentDisabled] = useState(true);
   const [data, setData] = useState();
@@ -22,7 +21,7 @@ function CompanyInfo() {
 
   useEffect(() => {
     const fetchApi = async () => {
-      const result = await getCompanies(idCompany);
+      const result = await getCompanyByID(idCompany);
       setData(result);
     }
     fetchApi();
@@ -46,20 +45,19 @@ function CompanyInfo() {
   const onReset = () => {
     form.resetFields();
   };
+  
   const onFinish = async (values) => {
     const options = { ...values };
-
     const result = await editCompany(data.id, options);
 
     if (isEmptyObject(result)) {
       openNotificationWithIcon("error", "Error", "Something is happening! Try later...");
-    }
-    else {
+    } else {
       openNotificationWithIcon("success", "Success", "Updated your information");
-
       setComponentDisabled(true);
     }
   };
+
   const onFinishFailed = () => {
     openNotificationWithIcon("error", "Error", "Something is happening! Try later...");
   };
